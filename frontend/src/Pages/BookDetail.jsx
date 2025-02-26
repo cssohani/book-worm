@@ -3,7 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 const BookDetail = ({ books, setBooks}) => {
-    
+    const [status, setStatus] = useState("");
+    const [review, setReview] = useState("");
 
     const { id } = useParams();
     const navigate = useNavigate();
@@ -11,8 +12,7 @@ const BookDetail = ({ books, setBooks}) => {
     const book = books.find((b) => b.id.toString() === id);
     if (!book) return <h2>Book Not Found</h2>
 
-    const [status, setStatus] = useState(book.status || "");
-    const [review, setReview] = useState(book.review || "");
+    
     
 
     const handleSave = async() => {
@@ -23,7 +23,7 @@ const BookDetail = ({ books, setBooks}) => {
                     b.id === book.id ? {...b, status, review} : b
                 })
             setBooks(bookUpdate);
-            console.log("Book updated")
+            alert("Book updated")
             }
         }catch(err){
             console.log(err);
