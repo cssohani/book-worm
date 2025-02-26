@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import axios from 'axios'
 
 
@@ -10,16 +10,14 @@ const Login = () => {
     const [success, setSuccess] = useState(false);
     const [errMsg, setErrMsg] = useState("");
 
-    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try{
             const response = await axios.post("http://localhost:8080/", { email, password }, {withCredentials : true});
-            const token = response.data;
             
-            console.log(token);
-            //localStorage.setItem("token: ", token);
+            
+            
             setEmail("");
             setPassword("");
             setSuccess(true);
@@ -32,19 +30,45 @@ const Login = () => {
     return (
         <>
             {success ? 
-                <div>
+                <div className="container justify-content-center">
                     <h3>You are logged in</h3>
-                    <Link to="/home">Go Home</Link>
+                    <Link to="/search-books">Go To BookWorm</Link>
                 </div>
                 :
-                <div>
-                    
-                    <form onSubmit={handleSubmit}>
-                        <input type="text" id="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
-                        <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" required/>
-                        <button type="submit">Login</button>
-                    </form>
+                <div className="container d-flex justify-content-center align-items-center vh-100">
+                <div className="col-md-5">
+                    <div className="card shadow-lg p-4">
+                        <h2 className="text-center mb-4">Login</h2>
+                        {errMsg && <div className="alert alert-danger">{errMsg}</div>}
+                        <form onSubmit={handleSubmit}>
+                            <div className="mb-3">
+                                <label className="form-label fw-bold">Email</label>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    required
+                                />
+                            </div>
+                            <div className="mb-3">
+                                <label className="form-label fw-bold">Password</label>
+                                <input
+                                    type="password"
+                                    className="form-control"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    required
+                                />
+                            </div>
+                            <button type="submit" className="btn btn-primary w-100">Login</button>
+                        </form>
+                        <p className="text-center mt-3">
+                            Don't have an account? <a href="/register" className="text-decoration-none">Sign up</a>
+                        </p>
+                    </div>
                 </div>
+            </div>
             }
             
         </>

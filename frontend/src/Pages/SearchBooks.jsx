@@ -3,37 +3,27 @@ import axios from 'axios'
 import MenuBar from '../Components/MenuBar';
 import BookCard from '../Components/BookCard'
 
-
 const SearchBooks = () => {
     const [books, setBooks] = useState([]);
     const [query, setQuery] = useState("");
     const [error, setError] = useState(null);
     const API_KEY = "AIzaSyBULE987RoYAruV4nn907sGkQALhFfuLUg";
-
     const fetchBooks = async (title) => {
         try{
             const response = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${title}&key=${API_KEY}`);
             setBooks(response.data.items || []);
             setError(null);
-            console.log(books);
-            //console.log(error);
         }catch(error){
-            //setError("Failed to retrieve books");
+            
             console.log(error);
         }
     }
 
-    // const searchBook = ((e) => {
-    //     e.preventDefault();
-    //     if(query.trim() !== ""){
-    //         fetchBooks(query);
-    //     }
-    // });
 
     const addBook = async (book) => {
         try{
-            //e.preventDefault();
-            const response = await axios.post("http://localhost:8080/books", {
+            
+            const response = await axios.post("http://localhost:8080/my-books", {
                 title: book.volumeInfo.title,
                 authors: book.volumeInfo.authors?.join(", ") || "Unknown Author",
                 thumbnail: book.volumeInfo.imageLinks?.thumbnail || "",
@@ -63,7 +53,7 @@ const SearchBooks = () => {
     return (
         <div className="d-flex">
           <MenuBar />
-          <div className="container my-5" style={{ paddingTop: "100px" }}>
+          <div className="container my-5" style={{ paddingTop: "20px", marginRight: "50px" }}>
             <h1 className="text-center">Search Books</h1>
     
             <form onSubmit={handleSearch} className="mb-4">

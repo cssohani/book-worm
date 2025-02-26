@@ -1,15 +1,5 @@
-import { useState } from 'react'
-import {
-  CDBSidebar,
-  CDBSidebarContent,
-  CDBSidebarFooter,
-  CDBSidebarHeader,
-  CDBSidebarMenu,
-  CDBSidebarMenuItem,
-} from 'cdbreact';
 import { useNavigate, Link } from 'react-router-dom';
 import * as FaIcons from 'react-icons/fa'
-import * as GiIcons from 'react-icons/gi'
 import axios from 'axios'
 
 
@@ -28,11 +18,11 @@ const MenuBar = () => {
     }
   }
   return (
-    <div className="container-fluid">
+    <div className="container-fluid" style={{width: "360px"}}>
       <div className="row">
-        <div className="bg-dark col-auto col-md-5 min-vh-100">
+        <div className="bg-dark col-md-10 min-vh-100">
           
-          <h5 className="text-decoration-none text-white align-item-center">Book Worm</h5>
+          <h5 className="text-decoration-none text-white align-item-center" style={{paddingTop: "20px"}}>Book Worm</h5>
           <ul className="nav nav-pills flex-column">
             <li className="nav-item text-white fs-4">
               

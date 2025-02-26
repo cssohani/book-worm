@@ -55,7 +55,7 @@ app.get('/books', (req, res) => {
 
 })
 
-app.post("/books", async (req, res) => {
+app.post("/my-books", async (req, res) => {
     const { title, authors, thumbnail, publisheddate } = req.body;
     try{
         const checkBook = await db.query("SELECT * FROM books WHERE title = $1", [title]);
@@ -132,8 +132,20 @@ app.post("/logout", (req, res) => {
     res.json({message : "Logout successful"})
 })
 
-app.delete('/books/:id', (req, res) => {
-    const id = Number(req.params.id);
+app.put('/my-books/:id', async (req, res) => {
+    const { id } = req.params;
+    const { status, review } = req.body;
+
+    try {
+        await db.query('UPDATE books SET status = $1, review = $2 WHERE id = $3', [status, review, id]);
+        res.status(200).json({ message: 'Book updated successfully' });
+    } catch (error) {
+        res.status(500).json({ error: 'Database update failed' });
+    }
+});
+
+app.delete('/my-books/:id', (req, res) => {
+    const { id } = req.params;
     const sql_query = "DELETE FROM books WHERE id=$1";
     db.query(sql_query, [id], (err, result) => {
         if(err){
